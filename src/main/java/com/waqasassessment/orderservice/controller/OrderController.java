@@ -1,6 +1,6 @@
 package com.waqasassessment.orderservice.controller;
 
-import com.waqasassessment.orderservice.model.Order;
+import com.waqasassessment.orderservice.model.OrderEntity;
 import com.waqasassessment.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,22 +10,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/Order/api")
+@RequestMapping("/order/api")
 public class OrderController {
    @Autowired
-   private final OrderService orderService;
-
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+   private OrderService orderService;
 
     @GetMapping("/{id}")
-    public Order getOrder(@PathVariable final String id) {
+    public OrderEntity getOrder(@PathVariable final String id) {
         return orderService.getOrderById(id);
     }
+    @GetMapping("")
+    public List<OrderEntity> getAllOrders() {
+        return orderService.getAllOrders();
+    }
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
+    public OrderEntity createOrder(@RequestBody OrderEntity order) {
         return orderService.createOrder(order);
     }
 
